@@ -1,8 +1,9 @@
 import { useState } from "react"
 import classes from "./NewPost.module.css"
 import Modal from "../components/Modal"
+import { Link } from "react-router-dom"
 
-const NewPost = ({ onCancel, onAddPost }) => {
+const NewPost = ({ onAddPost }) => {
     const [enteredBody, setEnteredBody] = useState("")
     const [enteredAuthor, setEnteredAuthor] = useState("")
 
@@ -21,7 +22,7 @@ const NewPost = ({ onCancel, onAddPost }) => {
             id: Math.random().toString(),
         }
         onAddPost(postData)
-        onCancel()
+        // onCancel()
     }
 
     return (
@@ -36,9 +37,9 @@ const NewPost = ({ onCancel, onAddPost }) => {
                     <input type="text" id="name" required onChange={authorChangeHandler} />
                 </p>
                 <p className={classes.actions}>
-                    <button type="button" onClick={onCancel}>
+                    <Link to="/" type="button">
                         cancel
-                    </button>
+                    </Link>
                     <button type="submit">submit</button>
                 </p>
             </form>
