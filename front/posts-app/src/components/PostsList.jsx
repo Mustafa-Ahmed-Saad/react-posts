@@ -3,32 +3,13 @@ import NewPost from "../routes/NewPost"
 import Modal from "./Modal"
 import Post from "./Post"
 import classes from "./PostsList.module.css"
+import { useLoaderData } from "react-router-dom"
 
 const PostsList = () => {
-    const [posts, setPosts] = useState([])
-    const [isFetching, setIsFetching] = useState(false)
+    // const [posts, setPosts] = useState([])
+    const  posts = useLoaderData()
 
-    async function getPosts(postData) {
-        setIsFetching(true)
-
-        try {
-            const res = await fetch("http://localhost:8080/posts", {
-                method: "GET",
-                body: JSON.stringify(postData),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            })
-            if (!res.ok) throw new Error("Failed to add post")
-            const data = await res.json()
-            setPosts(data.posts)
-            setIsFetching(false)
-            return data
-        } catch (e) {
-          setIsFetching(false)
-            console.log(e)
-        }
-    }
+    
 
     async function addPostHandler(postData) {
         try {
@@ -62,22 +43,18 @@ const PostsList = () => {
         //     .catch((e) => console.log(e))
     }
 
-    useEffect(() => {
-        getPosts()
-    }, [])
+    
 
     return (
         <>
-           
-            {!isFetching && posts.length > 0 && (
+            { posts.length > 0 && (
                 <ul className={classes.posts}>
                     {posts.map((post, i) => (
                         <Post key={post.id} author={post.author} body={post.body} />
                     ))}
                 </ul>
             )}
-            {!isFetching && posts.length === 0 && <p>No posts yet!</p>}
-            {isFetching && <div>loading...</div>}
+            { posts.length === 0 && <p>No posts yet!</p>}
         </>
     )
 }
