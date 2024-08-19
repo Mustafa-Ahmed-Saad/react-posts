@@ -14,6 +14,7 @@ const NewPost = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log("first ddd",data)
     if (data?.post) {
       navigate("/");
     }
